@@ -87,6 +87,25 @@ function InitBoardVars() {
 	}
 }
 
+function FlipBoard() {
+    var flippedBoard = new Array(BRD_SQ_NUM);
+
+    for (var sq = 0; sq < 64; ++sq) {
+        var flippedSq = SQ120(63 - sq); // Flip rank perspective
+        flippedBoard[flippedSq] = GameBoard.pieces[SQ120(sq)];
+    }
+
+    GameBoard.pieces = flippedBoard;
+
+    GameBoard.side ^= 1; // Switch side to move
+    GameBoard.posKey = GeneratePosKey(); // Recalculate position key
+}
+
+$("#FlipButton").click(function() {
+    FlipBoard();
+    PrintBoard(); // Refresh board display after flipping
+});
+
 function InitBoardSquares() {
 	var light = 0;
 	var rankName;
